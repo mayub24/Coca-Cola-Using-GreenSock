@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Mr+Dafoe&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Sacramento&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="back">
+        <div class="flex">
+            <div class="left">
+                <h1 class="anim1"><span>Let's Share</span> <span>a Coca Cola!</span></h1>
+                <p class="anim1">When we're all quarantined, Why dont we have a coke?</p>
+                <button class="anim1 btn">START DREAMING</button>
+            </div>
+
+            <div class="right">
+                <img src="./images/splash.png" alt="" class="splash">
+                <img src="./images/colaTrans.png" alt="" class="coke">
+            </div>
+        </div>
+    </div>
+
+
+    <!-- GSAP CORE CDN -->
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js"></script>
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/CSSRulePlugin3.min.js"></script>
+
+
+    <!-- JavaScript -->
+    <script>
+
+        const rule = CSSRulePlugin.getRule("span:after");
+
+        // gsap.to(rule, { cssRule: { scaleY: 0, backgroundColor: 'black' }, duration: 1 });
+
+        // Moving down
+        // From means bring in
+        // (selector, {styles such as opacity, duration and position})
+        // When we have same classes on multiple elements and we use stagger, it will bring in each element one after the other
+        // gsap.from('.anim1', { opacity: 0, duration: 3, y: -50, stagger: 0.7 });
+
+        // gsap.from('p', { opacity: 0, duration: 1, y: -100, delay: 0.5 })
+
+        // gsap.from('button', { opacity: 0, duration: 1, y: -50, delay: 1 })
+
+
+        // Splash
+        // gsap.from('.splash', { opacity: 0, duration: 2, y: 30, delay: 3.5 })
+
+        // Coke
+        // gsap.from('.coke', { opacity: 0, duration: 3, x: 150, delay: 2 })
+
+
+        // Redoing everything the timeline
+        // The purpose of this is so that we dont have to re-adjust timing and delay for each item based on another item
+        const tl = gsap.timeline({ defaults: { duration: 1 } });
+
+        // When were using the timeline, tye order of the animations is very important becuz once 1 animation finishes, the 2nd animation starts automatically
+
+        tl.from('.anim1', { y: -50, stagger: 0.6, opacity: 0 })
+            .to(rule, { duration: 1.8, cssRule: { scaleY: 0 } }, "-=1.2")
+            .from('.coke', { opacity: 0, scale: 5, duration: 3, x: 250, ease: "power4.out", }, "-=0.5")
+            .from('.splash', { opacity: 0, scale: 0, duration: 2, y: 50 }, "-=2.3")
+
+
+        document.querySelector('.btn').addEventListener('click', () => {
+            tl.reversed() ? tl.play() : tl.reverse();
+        })
+
+    </script>
+
+</body>
+
+</html>
